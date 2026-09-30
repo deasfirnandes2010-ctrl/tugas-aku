@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A simple to-do list to organize your day." />
+  <title>My Tasks</title>
+
+  <!-- Font (opsional). Jika offline, browser otomatis memakai font cadangan. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- "defer" = script dijalankan setelah seluruh HTML selesai dibaca -->
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <main class="app">
+
+    <!-- ===== HEADER ===== -->
+    <header class="app-header">
+      <div>
+        <h1>MY TASKS</h1>
+        <p class="subtitle">Organize your day, one task at a time.</p>
+      </div>
+
+      <!-- Tombol dark/light mode. Ikon yang tampil diatur oleh CSS -->
+      <button id="theme-toggle" class="icon-button theme-toggle" type="button" aria-label="Switch to dark mode">
+        <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+        <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+      </button>
+    </header>
+
+    <!-- ===== FORM TAMBAH TASK =====
+         Karena memakai <form>, menekan Enter di input otomatis
+         memicu event "submit" (sama seperti klik tombol Add Task). -->
+    <form id="task-form" class="task-form" novalidate>
+      <label class="visually-hidden" for="task-input">Task name</label>
+      <input
+        id="task-input"
+        class="control"
+        type="text"
+        placeholder="What needs to be done?"
+        maxlength="120"
+        autocomplete="off"
+      />
+
+      <div class="task-options">
+        <div class="field">
+          <label for="priority-select">Priority</label>
+          <select id="priority-select" class="control">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="due-date-input">Due date</label>
+          <input id="due-date-input" class="control" type="date" />
+        </div>
+
+        <button type="submit" class="btn-primary">Add Task</button>
+      </div>
+
+      <!-- Pesan error validasi. role="alert" agar dibacakan screen reader -->
+      <p id="form-message" class="form-message" role="alert"></p>
+    </form>
+
+    <!-- ===== DAFTAR TASK ===== -->
+    <section aria-label="Your tasks">
+      <div class="filters" role="group" aria-label="Filter tasks">
+        <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" type="button" data-filter="active" aria-pressed="false">Active</button>
+        <button class="filter-btn" type="button" data-filter="completed" aria-pressed="false">Completed</button>
+      </div>
+
+      <!-- Isi <ul> ini dibuat oleh JavaScript -->
+      <ul id="task-list" class="task-list"></ul>
+
+      <!-- Tampil hanya jika tidak ada task yang bisa ditampilkan -->
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-icon">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+        </div>
+        <h2 id="empty-title" class="empty-title"></h2>
+        <p id="empty-text" class="empty-text"></p>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER: COUNTER & CLEAR ===== -->
+    <footer class="app-footer">
+      <p id="task-counter" class="task-counter" aria-live="polite">0 tasks remaining</p>
+      <button id="clear-completed" class="btn-text" type="button">Clear Completed</button>
+    </footer>
+
+    <noscript>
+      <p class="form-message">Please enable JavaScript to use this app.</p>
+    </noscript>
+  </main>
+</body>
+</html>
